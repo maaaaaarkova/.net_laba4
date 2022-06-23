@@ -10,6 +10,31 @@ namespace net_laba4
         private Application _application;
         private OperatingSystem _operatingSystem;
 
+        private bool ProcessorIsTurnedOn
+        {
+            get
+            {
+                return _processor == null ? false : _processor.IsTurnedOn;
+            }
+        }
+
+        private bool ApplicationIsTurnedOn
+        {
+            get
+            {
+                return _application == null ? false : _application.IsTurnedOn;
+            }
+        }
+
+        private bool OperatingSystemIsTurnedOn
+        {
+            get
+            {
+                return _operatingSystem == null ? false : _operatingSystem.IsTurnedOn;
+            }
+        }
+
+
         public string TurnOnPC()
         {
             _processor = new Processor();
@@ -20,7 +45,7 @@ namespace net_laba4
 
         public string TurnOnOS(OperatingSystem os)
         {
-            if (_processor.IsTurnedOn)
+            if (ProcessorIsTurnedOn)
             {
                 _operatingSystem = os;
                 _operatingSystem.TurnOn();
@@ -28,67 +53,73 @@ namespace net_laba4
                 return $"The {_operatingSystem} OS is turned ON.";
             }
 
-            else
-            {
-                return "The OS cannot be turned ON.";
-            }
+            return "The OS cannot be turned ON.";
         }
 
         public string TurnOnApplication()
         {
-            if (_operatingSystem.IsTurnedOn)
+            bool osIsTurnedOn = _operatingSystem == null ? false : _operatingSystem.IsTurnedOn;
+
+            if (osIsTurnedOn)
             {
                 _application = new Application();
                 _application.TurnOn();
 
                 return $"The Application is runned by {_operatingSystem}.";
             }
-            return "";
+
+            return "The OS is not turned ON"; 
         }
 
         public string TurnOffPC()
         {
-            
-            return "";
+            StringBuilder builder = new StringBuilder();
+
+            if (ProcessorIsTurnedOn)
+            {
+                if (OperatingSystemIsTurnedOn)
+                    builder.AppendLine(TurnOffOS());
+
+                _processor.TurnOff();
+                builder.AppendLine("The Processor was turned OFF.");
+
+                return builder.ToString();
+            }
+
+
+            return "The processor is turned OFF"; 
         }
 
         public string TurnOffOS()
         {
-            if (_operatingSystem.IsTurnedOn)
+            StringBuilder builder = new StringBuilder();
+
+            if (OperatingSystemIsTurnedOn)
             {
-                if (_application.IsTurnedOn)
+                if (ApplicationIsTurnedOn)
                 {
                     _application.TurnOff();
-                    _operatingSystem.TurnOff();
-
-                    return "The application was forcibly turned OFF. The OS was turned OFF.";
+                    builder.AppendLine("The application was forcibly turned OFF. ");
                 }
 
-                else
-                {
-                    _operatingSystem.TurnOff();
-                    return "The OS was turned OFF.";
-                }
+                _operatingSystem.TurnOff();
+                builder.AppendLine("The OS was turned OFF.");
+
+                return builder.ToString();
             }
 
-            else
-            {
-                return "The OS is not turned ON.";
-            }
+            return "The OS is not turned ON.";
         }
 
         public string TurnOffAplication()
         {
-            if (_application.IsTurnedOn)
+            if (ApplicationIsTurnedOn)
             {
                 _application.TurnOff();
                 return "The Application was turned OFF.";
             }
 
-            else
-            {
-                return "The Application is not turned ON.";
-            }
+            return "The Application is not turned ON.";
         }
 
     }
