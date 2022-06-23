@@ -68,7 +68,7 @@ namespace net_laba4
                 return $"The Application is runned by {_operatingSystem}.";
             }
 
-            return "The OS is not turned ON"; 
+            return "You can not start the aplication because your OS is turned OFF.";  
         }
 
         public string TurnOffPC()
@@ -87,7 +87,7 @@ namespace net_laba4
             }
 
 
-            return "The processor is turned OFF"; 
+            return "The PC is already turned OFF"; 
         }
 
         public string TurnOffOS()

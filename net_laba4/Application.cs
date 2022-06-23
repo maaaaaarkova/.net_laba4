@@ -10,12 +10,12 @@ namespace net_laba4
 
         public void TurnOn()
         {
-
+            IsTurnedOn = true;
         }
 
         public void TurnOff()
         {
-
+            IsTurnedOn = false;
         }
     }
 }
