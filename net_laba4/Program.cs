@@ -6,7 +6,7 @@ namespace net_laba4
     {
         static void Main()
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }
