@@ -34,29 +34,26 @@ namespace net_laba4
             }
         }
 
-
-        public string TurnOnPC()
+        public bool TurnOnPC()
         {
             _processor = new Processor();
             _processor.TurnOn();
 
-            return "The PC is turned ON.";
+            return _processor.IsTurnedOn;
         }
 
-        public string TurnOnOS(OperatingSystem os)
+        public bool TurnOnOS(OperatingSystem os)
         {
             if (ProcessorIsTurnedOn)
             {
                 _operatingSystem = os;
                 _operatingSystem.TurnOn();
-
-                return $"The {_operatingSystem} OS is turned ON.";
             }
 
-            return "The OS cannot be turned ON.";
+            return _operatingSystem.IsTurnedOn;
         }
 
-        public string TurnOnApplication()
+        public bool TurnOnApplication()
         {
             bool osIsTurnedOn = _operatingSystem == null ? false : _operatingSystem.IsTurnedOn;
 
@@ -65,10 +62,9 @@ namespace net_laba4
                 _application = new Application();
                 _application.TurnOn();
 
-                return $"The Application is runned by {_operatingSystem}.";
             }
 
-            return "You can not start the aplication because your OS is turned OFF.";  
+            return _application.IsTurnedOn;  
         }
 
         public string TurnOffPC()
@@ -111,15 +107,14 @@ namespace net_laba4
             return "The OS is not turned ON.";
         }
 
-        public string TurnOffAplication()
+        public bool TurnOffAplication()
         {
             if (ApplicationIsTurnedOn)
             {
                 _application.TurnOff();
-                return "The Application was turned OFF.";
             }
 
-            return "The Application is not turned ON.";
+            return _application.IsTurnedOn;
         }
 
     }
