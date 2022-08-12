@@ -10,31 +10,31 @@ namespace net_laba4
             ComputerFacade facade = new ComputerFacade();
 
             var pcTurnOn = facade.TurnOnPC();
-            Console.WriteLine(pcTurnOn);
+            Console.WriteLine(pcTurnOn.Result);
 
             Console.WriteLine("\n");
 
             var applicationTurnOnFailed = facade.TurnOnApplication();
-            Console.WriteLine(applicationTurnOnFailed);
+            Console.WriteLine(applicationTurnOnFailed.Result);
 
             Console.WriteLine("\n");
 
             OperatingSystem os = new LinuxOS();
             var OSTurnOn = facade.TurnOnOS(os);
-            Console.WriteLine(OSTurnOn);
+            Console.WriteLine(OSTurnOn.Result);
 
             Console.WriteLine("\n");
 
             var applicationTurnOn = facade.TurnOnApplication();
-            Console.WriteLine(applicationTurnOn);
+            Console.WriteLine(applicationTurnOn.Result);
 
             Console.WriteLine("\n");
 
             var OSTurnOff = facade.TurnOffOS();
-            Console.WriteLine(OSTurnOff);
+            Console.WriteLine(OSTurnOff.Result);
 
             var pcTurnOff = facade.TurnOffPC();
-            Console.WriteLine(pcTurnOff);
+            Console.WriteLine(pcTurnOff.Result);
 
 
         }
