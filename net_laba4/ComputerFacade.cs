@@ -14,7 +14,7 @@ namespace net_laba4
         {
             get
             {
-                return _processor == null ? false : _processor.IsTurnedOn;
+                return _processor != null && _processor.IsTurnedOn;
             }
         }
 
@@ -22,7 +22,7 @@ namespace net_laba4
         {
             get
             {
-                return _application == null ? false : _application.IsTurnedOn;
+                return _application != null && _application.IsTurnedOn;
             }
         }
 
@@ -30,25 +30,25 @@ namespace net_laba4
         {
             get
             {
-                return _operatingSystem == null ? false : _operatingSystem.IsTurnedOn;
+                return _operatingSystem != null && _operatingSystem.IsTurnedOn;
             }
         }
 
         public SystemResult TurnOnPC()
         {
-            SystemResult result = new SystemResult;
+            SystemResult result = new SystemResult();
 
             _processor = new Processor();
             _processor.TurnOn();
 
-            result.Result = "The PC was turned ON."
+            result.Result = "The PC was turned ON.";
             result.Succeed = true;
             return result;
         }
 
         public SystemResult TurnOnOS(OperatingSystem os)
         {
-            SystemResult result = new SystemResult;
+            SystemResult result = new SystemResult();
 
             if (ProcessorIsTurnedOn)
             {
@@ -59,20 +59,16 @@ namespace net_laba4
                 return result;
             }
 
-            else
-            {
                 result.Result = "The OS was not turned ON.";
                 result.Succeed = false;
                 return result;
-            }   
         }
 
         public SystemResult TurnOnApplication()
         {
-            bool osIsTurnedOn = _operatingSystem == null ? false : _operatingSystem.IsTurnedOn;
-            SystemResult result = new SystemResult;
+            SystemResult result = new SystemResult();
 
-            if (osIsTurnedOn)
+            if(OperatingSystemIsTurnedOn)
             {
                 _application = new Application();
                 _application.TurnOn();
@@ -81,19 +77,20 @@ namespace net_laba4
                 return result;
             }
 
-            result.Result = "The OS is not turned ON so you can`t start your application.";
-            result.Succeed = false;
-            return result; 
+                result.Result = "The OS is not turned ON so you can`t start your application.";
+                result.Succeed = false;
+                return result; 
         }
 
         public SystemResult TurnOffPC()
         {
             StringBuilder builder = new StringBuilder();
+            SystemResult result = new SystemResult();
 
             if (ProcessorIsTurnedOn)
             {
                 if (OperatingSystemIsTurnedOn)
-                    builder.AppendLine(TurnOffOS());
+                    builder.AppendLine(TurnOffOS().Result);
 
                 _processor.TurnOff();
                 builder.AppendLine("The Processor was turned OFF.");
@@ -103,9 +100,9 @@ namespace net_laba4
                 return result;
             }
 
-            result.Result = "The PC can`t be turned OFF";
-            result.Succeed = false;
-            return result; 
+                result.Result = "The PC can`t be turned OFF.";
+                result.Succeed = false;
+                return result;
         }
 
         public SystemResult TurnOffOS()
@@ -129,13 +126,14 @@ namespace net_laba4
                 return result;
             }
 
-            result.Result = "The OS is not turned ON.";
-            result.Succeed = false;
-            return result;
+                result.Result = "The OS can`t be turned OFF.";
+                result.Succeed = false;
+                return result;
         }
 
-        public SystemResult TurnOffAplication()
+        public SystemResult TurnOffApplication()
         {
+            SystemResult result = new SystemResult();
             if (ApplicationIsTurnedOn)
             {
                 _application.TurnOff();
@@ -143,15 +141,10 @@ namespace net_laba4
                 result.Succeed = true;
                 return result;
             }
-
-            else
-            {
+            
                 result.Result = "The application can`t be turned OFF.";
                 result.Succeed = false;
                 return result;
-            }
-            
         }
-
     }
 }
